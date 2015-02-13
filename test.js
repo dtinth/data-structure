@@ -37,7 +37,24 @@ bail('When passing an object in place of string', function(ok) {
   new V({ x: { } })
 }, /should be a string/i)
 
+section('Data Inheritance', function() {
+  var NoteEvent = new DataStructure(Event, { channel: String })
+  bail('When missing parent prop', function() {
+    new NoteEvent({ channel: 'green', beat: 1, time: 1 })
+  }, /position/)
+  bail('When missing child prop', function() {
+    new NoteEvent({ position: 1, beat: 1, time: 1 })
+  }, /channel/)
+})
+
 console.log("\033[1;32m素晴らしい！\033[0m")
+
+function section(name, f) {
+  console.log('============================================')
+  console.log(name)
+  console.log('============================================')
+  f()
+}
 
 function bail(when, f, regex) {
   test(when, function(ok) {

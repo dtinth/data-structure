@@ -1,5 +1,7 @@
 
-module.exports = function DataStructure(schema) {
+module.exports = function DataStructure() {
+
+  var schemas = [].slice.call(arguments)
 
   function Constructor(object) {
     Constructor.validate(object)
@@ -7,7 +9,9 @@ module.exports = function DataStructure(schema) {
   }
 
   Constructor.validate = function(object) {
-    validate(schema, object)
+    for (var i = 0; i < schemas.length; i ++) {
+      validate(schemas[i], object)
+    }
   }
 
   return Constructor
