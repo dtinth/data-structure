@@ -1,5 +1,7 @@
 
-module.exports = function DataStructure() {
+module.exports = DataStructure
+
+function DataStructure() {
 
   var schemas = [].slice.call(arguments)
 
@@ -16,6 +18,18 @@ module.exports = function DataStructure() {
 
   return Constructor
 
+}
+
+DataStructure.maybe = function maybe(schema) {
+  function MaybeValidator(object) {
+    MaybeValidator.validate(object)
+    return object
+  }
+  MaybeValidator.validate = function(value) {
+    if (value === null || value === undefined) return
+    validate(schema, value)
+  }
+  return MaybeValidator
 }
 
 function validate(schema, value) {

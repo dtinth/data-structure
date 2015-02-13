@@ -47,6 +47,28 @@ section('Data Inheritance', function() {
   }, /channel/)
 })
 
+section('DataStructure.maybe', function() {
+  var NoteEvent = new DataStructure({ channel: DataStructure.maybe(String) })
+  bail('When not provided', function() {
+    new NoteEvent({ })
+  }, /missing/)
+  test('When undefined', function(ok) {
+    new NoteEvent({ channel: undefined })
+    ok('That is ok!')
+  })
+  test('When null', function(ok) {
+    new NoteEvent({ channel: null })
+    ok('That is ok!')
+  })
+  test('When type is correct', function(ok) {
+    new NoteEvent({ channel: 'wow' })
+    ok('That is great!')
+  })
+  bail('When type is incorrect', function() {
+    new NoteEvent({ channel: 5 })
+  }, /string/)
+})
+
 console.log("\033[1;32m素晴らしい！\033[0m")
 
 function section(name, f) {
